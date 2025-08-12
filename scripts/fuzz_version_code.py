@@ -48,8 +48,10 @@ async def fuzz_for_device(device_id: str, serial_no: str, latest_version: str):
     )
     async with aiohttp.ClientSession() as session:
         for v1_, v2_, v3_ in product(
-            range(v1, -1, -1), range(v2, -1, -1), range(v3, -1, -1)
+            range(v1, -1, -1), range(9, -1, -1), range(32, -1, -1)
         ):
+            if (v1_, v2_, v3_) > (v1, v2, v3):
+                continue
             for offset in range(0, 365 * 2, 1):
                 build_ = last_build - timedelta(days=offset)
                 verfmt = f"V{v1_}.{v2_}.{v3_} build {build_.strftime('%y%m%d')}"
@@ -110,6 +112,7 @@ async def fuzz_for_device(device_id: str, serial_no: str, latest_version: str):
                                     )
                                     logging.info(json_.get("data"))
                                     last_build = build_
+                                    break
                                 else:
                                     logging.error(
                                         f"No valid firmware found for {verfmt} "
@@ -133,17 +136,18 @@ def main():
             return fuzz_for_device(
                 device_id="16041d8b-a187-4b0b-abc7-3671e9614aa6",
                 serial_no="FT9368351",
-                latest_version="V5.7.9 build 220520",
+                latest_version="V5.7.0 build 210408",
             )
         except Exception as e:
             logging.error(f"Error fuzzing Ball FT: {e}")
 
     def fuzz_gun_GD():
+        return asyncio.sleep(0.5)
         try:
             return fuzz_for_device(
                 device_id="16041d8b-a187-4b0b-abc7-3671e9614aa6",
                 serial_no="GD0104139",
-                latest_version="V9.9.200 build 250720",
+                latest_version="V6.9.0 build 250720",
             )
         except Exception as e:
             logging.error(f"Error fuzzing Gun GD: {e}")
