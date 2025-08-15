@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Run decrypt",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/scripts/decrypt.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-f",
+                "data/firmwares/IPCG_L_H8_CN_STD_5.7.102_250520/digicap.dav",
+                "-v",
+                "-t",
+                "r6",
+                "-o",
+                "data/firmwares/chenx6"
+            ],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

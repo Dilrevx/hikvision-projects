@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 from io import SEEK_CUR, SEEK_SET
 from logging import DEBUG, INFO, basicConfig, debug, info, warning
-from os import mkdir
+from os import makedirs
 from struct import unpack
 from typing import BinaryIO
 
@@ -166,7 +166,7 @@ match args.type:
     case _:
         header_key, file_key = 0, 0
 if folder := args.output:
-    mkdir(folder)
+    makedirs(folder, exist_ok=True)
 f = open(args.file, "rb")
 while True:
     next_header = f.read(16)
